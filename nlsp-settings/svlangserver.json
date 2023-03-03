@@ -1,0 +1,8 @@
+{
+    "systemverilog.includeIndexing": ["**/*.{v,vh,sv,svh}", "*.{v,vh,sv,svh}"],
+    "systemverilog.excludeIndexing": ["build/**"],
+    "systemverilog.defines" : [],
+    "systemverilog.launchConfiguration": "iverilog -t null",
+    "systemverilog.formatCommand": "verible-verilog-format  --indentation_spaces 4 --column_limit 200",
+    "systemverilog.linter": "icarus"
+}

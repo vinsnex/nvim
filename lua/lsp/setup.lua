@@ -22,12 +22,13 @@ local function install_lspserver(servers)
 end
 
 local servers = {
-    sumneko_lua = require("lsp.config.lua"),
+    lua_ls = require("lsp.config.lua"),
     jsonls = require("lsp.config.json"),
+    verible= require("lsp.config.verible"),
     svlangserver = require('lsp.config.svlangserver'),
-    
+
 }
-    -- svls = require("lsp.config.svls")
+-- svls = require("lsp.config.svls")
 
 install_lspserver(servers)
 
@@ -39,4 +40,5 @@ for name, config in pairs(servers) do
         lspconfig[name].setup({})
     end
 end
+
 

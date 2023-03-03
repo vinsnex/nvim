@@ -1,6 +1,6 @@
-vim.o.background = "dark"
+-- vim.o.background = "dark"
 
-colorscheme = "zephyr"
+colorscheme = "nightfox"
 -- zephyr
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)

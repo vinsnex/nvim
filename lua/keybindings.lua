@@ -11,7 +11,8 @@ local map = vim.api.nvim_set_keymap
 
 -- Save File
 map("n", "<leader>w", ":w<CR>", opt)
-map("n", "<leader>wq", ":wqa!<CR>", opt)
+map("n", "<leader>wq", ":wq!<CR>", opt)
+map("n", "<leader>wqa", ":wqa!<CR>", opt)
 map("n", "<leader>qq", ":wq!<CR>", opt)
 map("n", "<leader>qa", ":wqa!<CR>", opt)
 
@@ -19,9 +20,6 @@ map("n", "<leader>qa", ":wqa!<CR>", opt)
 -- map("c", "<C-j>", "<C-n>", { noremap = false })
 -- map("c", "<C-k>", "<C-p>", { noremap = false })
 
-
-
--- 本地变量
 local map = vim.api.nvim_set_keymap
 
 map('v', '<', '<gv', opt)
@@ -30,49 +28,45 @@ map('v', '>', '>gv', opt)
 map("n", "/", "/\\v", { noremap = true, silent = false })
 map("v", "/", "/\\v", { noremap = true, silent = false })
 
-------------------------------------------------------------------
--- windows 分屏快捷键
-------------------------------------------------------------------
--- 取消 s 默认功能
 map("n", "s", "", opt)
 map("n", "sv", ":vsp<CR>", opt)
 map("n", "sh", ":sp<CR>", opt)
--- 关闭当前
 map("n", "sc", "<C-w>c", opt)
--- 关闭其他
 map("n", "so", "<C-w>o", opt) -- close others
--- alt + hjkl  窗口之间跳转
 map("n", "<A-h>", "<C-w>h", opt)
 map("n", "<A-j>", "<C-w>j", opt)
 map("n", "<A-k>", "<C-w>k", opt)
 map("n", "<A-l>", "<C-w>l", opt)
--- 比例控制
 map("n", "<C-Left>", ":vertical resize -2<CR>", opt)
 map("n", "<C-Right>", ":vertical resize +2<CR>", opt)
 map("n", "<C-Down>", ":resize +2<CR>", opt)
 map("n", "<C-Up>", ":resize -2<CR>", opt)
 map("n", "s=", "<C-w>=", opt)
 
--- Terminal相关
 map("n", "st", ":sp | terminal<CR>", opt)
 map("n", "stv", ":vsp | terminal<CR>", opt)
 
 -- nvimTree
 map('n', '<leader>e', ':NvimTreeToggle<CR>', opt)
+map('n', '<leader>ef', ':NvimTreeFindFileToggle<CR>', opt)
 
--- Vista
-map('n', '<leader>t', ':Vista!!<CR>', opt)
 
 -- Telescope
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+map('n', '<leader>ff', ":Telescope find_files<CR>", opt)
+map('n', '<leader>ef', ':NvimTreeFindFileToggle<CR>', opt)
+map('n', '<leader>fg', ":Telescope live_grep grep_open_files=true<CR>", opt)
+map('n', '<leader>fgg', ":Telescope live_grep<CR>", opt)
+map('n', '<leader>fb', ":Telescope buffers<CR>", opt)
+map('n', '<leader>ft', ":Telescope tags<CR>", opt)
+
+-- ctag
+map('n', '<leader>t', ':SymbolsOutline<CR>', opt)
+map('n', 'g]', "<cmd>lua require('telescope').extensions.ctags_plus.jump_to_tag()<cr>", opt)
 
 -- bufferline 左右Tab切换
 map("n", "<A-,>", ":BufferLineCyclePrev<CR>", opt)
 map("n", "<A-.>", ":BufferLineCycleNext<CR>", opt)
+map("n", "<A-d>", ":bd<CR>", opt)
 map("n", "<A-<>", ":BufferLineMovePrev<CR>", opt)
 map("n", "<A->>", ":BufferLineMoveNext<CR>", opt)
 map("n", "<A-1>", ":BufferLineGoToBuffer 1<CR>", opt)
@@ -87,6 +81,8 @@ map("n", "<A-9>", ":BufferLineGoToBuffer 9<CR>", opt)
 map("n", "<A-0>", ":BufferLineGoToBuffer 10<CR>", opt)
 map("n", "<A-p>", ":BufferLineTogglePin<CR>", opt)
 
+-- Replace
+map("n", ":r", ":%s/", opt)
 
 local pluginKeys = {}
 
@@ -145,26 +141,27 @@ end
 
 
 pluginKeys.mapLSP = function(mapbuf)
-    mapbuf("n", "gd", "<cmd>lua require'telescope.builtin'.lsp_definitions({ initial_mode = 'normal', })<CR>", opt)
-    --mapbuf("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opt)
+    -- mapbuf("n", "gd", "<cmd>lua require'telescope.builtin'.lsp_definitions({ initial_mode = 'normal', })<CR>", opt)
+    mapbuf("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opt)
     mapbuf("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opt)
-    mapbuf("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opt)
+    -- mapbuf("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opt)
+    mapbuf("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opt)
     mapbuf("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opt)
     mapbuf("n", "gr", "<cmd>Lspsaga lsp_finder<CR>", opt)
     --mapbuf("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opt)
-    mapbuf("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opt)
 
-    -- mapbuf("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opt)
-    -- mapbuf("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opt)
-    -- mapbuf('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opt)
-    -- mapbuf("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opt)
-    -- mapbuf('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opt)
-    -- mapbuf('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opt)
-    -- mapbuf('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opt)
-    -- mapbuf('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opt)
+    mapbuf("n", "<space>w", "<cmd>lua vim.diagnostic.open_float()<CR>", opt)
+    mapbuf("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opt)
+    mapbuf("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opt)
+    mapbuf("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opt)
+
+
+    mapbuf("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opt)
 end
 
 -- see ./lua/plugin-config/comment.lua
+map("n", "<C-_>", "gcc", { noremap = false })
+map("v", "<C-_>", "gcc", { noremap = false })
 pluginKeys.comment = {
     -- Normal mode
     toggler = {
@@ -177,7 +174,5 @@ pluginKeys.comment = {
         bock = "gb",
     },
 }
-
-
 
 return pluginKeys

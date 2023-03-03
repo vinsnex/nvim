@@ -19,18 +19,10 @@ cmp.setup {
     },
 
     sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        -- For vsnip users.
         { name = 'vsnip' },
-        -- For luasnip users.
-        -- { name = 'luasnip' },
-        --For ultisnips users.
-        -- { name = 'ultisnips' },
-        -- -- For snippy users.
-        -- { name = 'snippy' },
-    }, {
+        { name = 'nvim_lsp' },
         { name = 'buffer' },
-        { name = 'path' }
+        { name = 'path' },
     }),
 
     mapping = require 'keybindings'.cmp(cmp),

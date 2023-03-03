@@ -6,73 +6,38 @@
         ],
         "description": "Snippet for an assignment"
     },
-    "force": {
-        "prefix": "force",
+    "integer": {
+        "prefix": "integer",
         "body": [
-            "force ${1:var} = ${2:value};$0"
+            "integer ${1:var};$0"
         ],
-        "description": "Snippet for a force assignment"
+        "description": "Snippet for an assignment"
     },
     "always": {
-        "prefix": "always",
+        "prefix": "al",
         "body": [
-            "always @(${1:sensitivity_list})",
-            "begin",
+            "always @(${1:sensitivity_list}) begin",
             "\t${0:${TM_SELECTED_TEXT}}",
             "end"
         ],
         "description": "Snippet for an always block"
     },
-    "always_ff": {
-        "prefix": "always_ff",
-        "body": [
-            "always_ff @(posedge ${1:clk} or negedge ${2:rst_n})",
-            "begin",
-            "\t${0:${TM_SELECTED_TEXT}}",
-            "end"
-        ],
-        "description": "Snippet for an always_ff block"
-    },
-    "always_latch": {
-        "prefix": "always_latch",
-        "body": [
-            "always_latch",
-            "begin",
-            "\t${0:${TM_SELECTED_TEXT}}",
-            "end"
-        ],
-        "description": "Snippet for an always_latch block"
-    },
-    "always_comb": {
-        "prefix": "always_comb",
-        "body": [
-            "always_comb",
-            "begin",
-            "\t${0:${TM_SELECTED_TEXT}}",
-            "end"
-        ],
-        "description": "Snippet for an always_comb block"
-    },
     "if": {
         "prefix": "if",
         "body": [
-            "if (${1:condition})",
-            "begin${2:: block_name}",
-            "\t${3:pass}",
+            "if (${1:condition}) begin",
+            "\t${2:pass}",
             "end"
         ],
         "description": "Snippet for an if statement"
     },
     "if/else": {
-        "prefix": "if/else",
+        "prefix": ["ife", "ifelse"],
         "body": [
-            "if (${1:condition})",
-            "begin${2:: block_name}",
+            "if (${1:condition}) begin",
+            "\t${2:pass}",
+            "end else begin",
             "\t${3:pass}",
-            "end",
-            "else",
-            "begin${4:: block_name}",
-            "\t${5:pass}",
             "end"
         ],
         "description": "Snippet for an if statement with else"
@@ -80,8 +45,7 @@
     "elseif": {
         "prefix": "else if",
         "body": [
-            "else if (${1:condition})",
-            "begin${2:: block_name}",
+            "else if (${1:condition}) begin",
             "\t${0:${TM_SELECTED_TEXT}}",
             "end"
         ],
@@ -90,8 +54,7 @@
     "else": {
         "prefix": "else",
         "body": [
-            "else",
-            "begin${1:: block_name}",
+            "else begin",
             "\t${0:${TM_SELECTED_TEXT}}",
             "end"
         ],
@@ -112,8 +75,8 @@
             "case (${1:variable})",
             "\t${0:${TM_SELECTED_TEXT}}",
             "\tdefault:",
-            "\tbegin${2:: block_name}",
-            "\t\t${3:default_case}",
+            "\tbegin$",
+            "\t\t${2:default_case}",
             "\tend",
             "endcase"
         ],
@@ -132,8 +95,7 @@
     "for": {
         "prefix": "for",
         "body": [
-            "for (int ${1:i}=0; ${1:i}<${2:MAX}; ++${1:i})",
-            "begin${3:: block_name}",
+            "for (${1:i}=0; ${1:i}<${2:MAX}; ${1:i}=${1:i}+1) being" ,
             "\t${0:${TM_SELECTED_TEXT}}",
             "end"
         ],
@@ -142,8 +104,7 @@
     "foreach": {
         "prefix": "foreach",
         "body": [
-            "foreach (${1:arr}[${2:i}])",
-            "begin",
+            "foreach (${1:arr}[${2:i}]) begin",
             "\t${0:${TM_SELECTED_TEXT}}",
             "end"
         ],
@@ -166,35 +127,6 @@
             "endtask"
         ],
         "description": "Snippet for a task definition"
-    },
-    "class": {
-        "prefix": "class",
-        "body": [
-            "class ${1:name};",
-            "\t${0:${TM_SELECTED_TEXT}}",
-            "endclass"
-        ],
-        "description": "Snippet for a class definition"
-    },
-    "class/extends": {
-        "prefix": "class/extends",
-        "body": [
-            "class ${1:name} extends ${2:super};",
-            "\tfunction new();",
-            "\t\t${0:${TM_SELECTED_TEXT}}",
-            "\tendfunction",
-            "endclass"
-        ],
-        "description": "Snippet for a class definition with extends"
-    },
-    "program": {
-        "prefix": "program",
-        "body": [
-            "program ${1:name}(${2:port_list});",
-            "\t${0:${TM_SELECTED_TEXT}}",
-            "endprogram"
-        ],
-        "description": "Snippet for a program definition"
     },
     "module": {
         "prefix": "module",
@@ -220,23 +152,6 @@
         ],
         "description": "Snippet for a parameterized module definition"
     },
-    "assert": {
-        "prefix": "assert",
-        "body": [
-            "${1:label}: assert (${2:test})",
-            "\telse \\$error(\"${0:Assertion ${1:label} failed!}\");"
-        ],
-        "description": "Snippet for an immediate assertion"
-    },
-    "property": {
-        "prefix": "property",
-        "body": [
-            "property ${1:name};",
-            "\t@(posedge ${2:clk}) ${0:test}",
-            "endproperty"
-        ],
-        "description": "Snippet for a property"
-    },
     "generate": {
         "prefix": "generate",
         "body": [
@@ -246,42 +161,14 @@
         ],
         "description": "Snippet for a generate block"
     },
-    "typedef/struct": {
-        "prefix": "typedef/struct",
-        "body": [
-            "typedef struct packed {",
-            "\t${0:${TM_SELECTED_TEXT}}",
-            "} ${1:name};"
-        ],
-        "description": "Snippet for a structure type definition"
-    },
-    "typedef/enum": {
-        "prefix": "typedef/enum",
-        "body": ["typedef enum ${1:type} { ${0:${TM_SELECTED_TEXT}} } ${2:name};"],
-        "description": "Snippet for a enumeration type definition"
-    },
-    "interface": {
-        "prefix": "interface",
-        "body": [
-            "interface ${1:name};",
-            "\t${0:${TM_SELECTED_TEXT}}",
-            "endinterface"
-        ],
-        "description": "Snippet for an interface definition"
-    },
-    "ternary": {
-        "prefix": "ter",
-        "body": ["$1 ? $2 : $3"],
-        "description": "Snippet for a ternary operator expression"
-    },
     "reg": {
         "prefix": "reg",
-        "body": ["reg $1;$0"],
+        "body": ["reg [$1:${3:0}] ${2:var};$0"],
         "description": "Snippet for a register declaration"
     },
     "regarray": {
         "prefix": "rega",
-        "body": ["reg [$1:$2] $3;$0"],
+        "body": ["rega [$1:${4:0}] ${2:var} [${5:0}:${3}];"],
         "description": "Snippet for a multi-bit register declaration"
     },
     "regmemory": {
@@ -291,28 +178,40 @@
     },
     "wire": {
         "prefix": "wire",
-        "body": ["wire $1;$0"],
+        "body": ["wire [$1:${3:0}] ${2:var};$0"],
         "description": "Snippet for a wire declaration"
     },
     "wirearray": {
         "prefix": "wirea",
-        "body": ["wire [$1:$2] $3;$0"],
+        "body": ["wire [$1:${4:0}] ${2:var} [${5:0}:${3}];"],
         "description": "Snippet for a multi-bit wire declaration"
-    },
-    "logic": {
-        "prefix": "logic",
-        "body": ["logic $1;$0"],
-        "description": "Snippet for a logic signal declaration"
-    },
-    "logicarray": {
-        "prefix": "logica",
-        "body": ["logic [$1:$2] $3;$0"],
-        "description": "Snippet for a multi-bit logic signal declaration"
     },
     "array": {
         "prefix": "array",
         "body": "[${1:8}:${2:0}]$0",
         "description": "Snippet for a multi-bit register declaration"
+    },
+    "FSM":{
+        "prefix": ["fsm", "FSM"],
+        "body": [
+            "reg [${1:Max}:0] ${2:st_cur}, ${3:st_next};",
+            "always @(posedge ${4:clk}, posedge ${5:rst}) begin",
+            "\tif(${3:nst}) begin",
+            "\t\t${2:st} <= ${6:0};",
+            "\tend else begin",
+            "\t\t${2} <= ${3};",
+            "\tend",
+            "end\n",
+            "always @(*) begin",
+            "\t$3 = $6;",
+            "\tcase ($3)",
+            "\t\t${7:Current_status}: $3 = ${8:Next_status};",
+            "\tendcase",
+            "end\n${0}"
+        ],
+
+
+        "description": "Snipped for a finite-state machine"
     },
     "associative_array": {
         "prefix": "assoc",
@@ -331,7 +230,7 @@
         "body": [
             "// -------------------------------------------------------",
             "// -- ${1:heading}",
-            "// -------------------------------------------------------\n$0"
+            "// -------------------------------------------------------$0"
         ],
         "description": "Snippet for a heading"
     },
